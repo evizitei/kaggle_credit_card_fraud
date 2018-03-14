@@ -34,3 +34,43 @@ train = credit.card.data[train.test.split == 1, ]
 
 So now we have a training set and a test set
 randomly chosen at 70/30.
+
+The author of the source notebook starts with
+the gradient boosting technique via the GBM
+package.  It's been a while since I've read over
+gradient boosting, so re-summarizing here:
+
+Train many "weak" models that are not good classifiers
+on their own, but that have *some* significance
+along different axes.  They don't have to be great
+models, just have some valid signal (and ideally
+not be overlapping in what signals they capture).
+
+Specifically, train weak learners progressively
+on specifically the examples that we have not 
+classified correctly with prior weak learners.
+
+This still requires some way to combine them.
+You could just average the votes from the learners,
+but this would not be very informative.  The learners
+are weighted according to how well they do
+on their respective passes.
+
+That's about as deep as I have time to review
+at the moment so let's implement:
+
+```{r}
+library(gbm, quietly=TRUE)
+```
+```{r}
+gbm.model <- gbm(Class ~ .
+                 , distribution = "bernoulli"
+                 , data = rbind(train, test)
+                 , n.trees = 500
+                 , interaction.depth = 3
+                 , n.minobsinnode = 100
+                 , shrinkage = 0.01
+                 , bag.fraction = 0.5
+                 , train.fraction = nrow(train)/(nrow(train) + nrow(test)))
+
+```
