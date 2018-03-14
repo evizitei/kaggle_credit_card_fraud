@@ -7,7 +7,7 @@ https://www.kaggle.com/mlg-ulb/creditcardfraud/data
 
 Specifically reproducing results from an expert kaggler:
 
-https://www.kaggle.com/mlg-ulb/creditcardfraud/data
+https://www.kaggle.com/nschneider/gbm-vs-xgboost-vs-lightgbm
 
 With the intent of learning R Notebooks a bit since I'm 
 mostly familiar with jupyter at present.
