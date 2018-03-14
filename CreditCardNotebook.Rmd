@@ -74,3 +74,12 @@ gbm.model <- gbm(Class ~ .
                  , train.fraction = nrow(train)/(nrow(train) + nrow(test)))
 
 ```
+
+And let's chart the quality of the predictions:
+
+```{r}
+best.iter = gbm.perf(gbm.model, method = "test")
+gbm.feature.imp = summary(gbm.model, n.trees = best.iter)
+gbm.test = predict(gbm.model, newdata=test, n.trees=best.iter)
+auc.gbm = roc(test$Class, gbm.test, plot=TRUE, col="red")
+```
