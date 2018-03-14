@@ -1,0 +1,36 @@
+---
+title: "CreditCardFraud"
+output: html_notebook
+---
+
+Trying to reproduce results from
+and expert kaggler kernel:
+
+https://www.kaggle.com/nschneider/gbm-vs-xgboost-vs-lightgbm
+
+```{r}
+library(pROC, quietly = TRUE)
+library(microbenchmark, quietly = TRUE)
+
+set.seed(42)
+
+credit.card.data = read.csv("./data/creditcard.csv")
+```
+
+Data is loaded, now we'll split into train and
+test data.
+
+```{r}
+train.test.split <- sample(2
+  , nrow(credit.card.data)
+  , replace = TRUE
+  , prob = c(0.7, 0.3))
+test = credit.card.data[train.test.split == 2, ]
+```
+
+```{r}
+train = credit.card.data[train.test.split == 1, ]
+```
+
+So now we have a training set and a test set
+randomly chosen at 70/30.
